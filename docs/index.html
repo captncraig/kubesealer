@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Kube Sealer</title>
+  </head>
+  <body><div class='container'>
+    <h1>KubeSealer</h1>
+    
+    <p>A Small utility for helping generate sealed secrets for 
+        use with <a href="https://github.com/bitnami-labs/sealed-secrets">bitnami-labs/sealed-secrets</a>
+    </p>
+    
+    <p>All logic is client side for security, built with gopherjs</p>
+
+    <h2>Public Key</h2>
+    <textarea class="form-control" id="publicKey" rows="3"></textarea>
+    <h2>Source Secret</h2>
+    <form>
+            <div class="form-group row">
+              <label for="secretName" class="col-sm-1 col-form-label">Name</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="secretName" value="mysecret">
+              </div>
+            </div>
+            <div class="form-group row">
+                <label for="secretNamespace" class="col-sm-1 col-form-label">Namespace</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="secretNamespace" value="default">
+                </div>
+            </div>
+            <h4>Data (plaintext, not b64 encoded):</h4>
+            <div class="form-group row secret-data-row">
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control secret-data-key" placeholder="key">
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control secret-data-value" placeholder="value">
+                    </div>
+            </div>
+    </form>
+    <button class='btn btn-primary' id="seal">Seal!</button>
+    <hr/>
+    <pre id="output"></pre>
+    <button class='btn btn-secondary' data-clipboard-target="#output" id='clip'>Clip</button>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="kubesealer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script>
+    new ClipboardJS('.btn');
+    </script>
+</div></body>
+</html>
