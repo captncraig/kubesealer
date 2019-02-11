@@ -76,6 +76,35 @@ func main() {
 
 		j("#output").SetText(string(dat) + "\n")
 	})
+	hookRows()
+}
+
+func hookRows() {
+
+	// add new button to last row (and remove existing ones)
+	j(".js-addrow").Remove()
+	j(".secret-data-row").Last().Append(j(`<button class="btn btn-success js-addrow"><i class="fas fa-plus"></i></button>`))
+
+	j(".js-addrow").On(jquery.CLICK, func(e *jquery.Event) {
+		parent := j(".secret-data-wrapper")
+		newContent := j(`<div class="form-group row secret-data-row">
+		<div class="col-sm-4">
+			<input type="text" class="form-control secret-data-key" placeholder="key">
+		</div>
+		<div class="col-sm-4">
+			<input type="text" class="form-control secret-data-value" placeholder="value">
+		</div>
+		<button class="btn btn-danger js-delrow"><i class="far fa-trash-alt"></i></button>&nbsp;
+	</div>`)
+		parent.Append(newContent)
+		hookRows()
+	})
+
+	j(".js-delrow").On(jquery.CLICK, func(e *jquery.Event) {
+		el := j(e.CurrentTarget).Parent()
+		el.Remove()
+		hookRows()
+	})
 }
 
 // Loading the cannonical types causes all kinds of syscall errors in gopherjs.
